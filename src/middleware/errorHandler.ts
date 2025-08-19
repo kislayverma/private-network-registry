@@ -1,4 +1,10 @@
-function errorHandler(err, req, res, next) {
+import { Request, Response, NextFunction } from 'express';
+
+interface CustomError extends Error {
+  code?: string;
+}
+
+export function errorHandler(err: CustomError, req: Request, res: Response, next: NextFunction): void {
   console.error('Error:', err);
 
   // Default error
@@ -27,7 +33,3 @@ function errorHandler(err, req, res, next) {
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
 }
-
-module.exports = {
-  errorHandler
-};

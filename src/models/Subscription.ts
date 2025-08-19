@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema } from 'mongoose';
+import { ISubscription } from '../types/models';
 
-const subscriptionSchema = new mongoose.Schema({
+const subscriptionSchema = new Schema<ISubscription>({
   networkId: {
     type: String,
     required: true,
@@ -35,4 +36,4 @@ subscriptionSchema.index({ networkId: 1 });
 subscriptionSchema.index({ stripeSubscriptionId: 1 });
 subscriptionSchema.index({ status: 1 });
 
-module.exports = mongoose.model('Subscription', subscriptionSchema);
+export default mongoose.model<ISubscription>('Subscription', subscriptionSchema);

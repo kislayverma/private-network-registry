@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema } from 'mongoose';
+import { IInviteCode } from '../types/models';
 
-const inviteCodeSchema = new mongoose.Schema({
+const inviteCodeSchema = new Schema<IInviteCode>({
   code: {
     type: String,
     required: true,
@@ -40,4 +41,4 @@ inviteCodeSchema.index({ networkId: 1, isActive: 1 });
 inviteCodeSchema.index({ createdBy: 1 });
 inviteCodeSchema.index({ expiresAt: 1 });
 
-module.exports = mongoose.model('InviteCode', inviteCodeSchema);
+export default mongoose.model<IInviteCode>('InviteCode', inviteCodeSchema);

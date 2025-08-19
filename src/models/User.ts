@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema } from 'mongoose';
+import { IUser } from '../types/models';
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema<IUser>({
   username: {
     type: String,
     required: true,
@@ -44,4 +45,4 @@ userSchema.index({ username: 1 });
 userSchema.index({ publicKey: 1 });
 userSchema.index({ email: 1 });
 
-module.exports = mongoose.model('User', userSchema);
+export default mongoose.model<IUser>('User', userSchema);

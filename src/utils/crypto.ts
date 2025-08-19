@@ -1,14 +1,14 @@
-const nacl = require('tweetnacl');
-const naclUtil = require('tweetnacl-util');
+import * as nacl from 'tweetnacl';
+import * as naclUtil from 'tweetnacl-util';
 
 /**
  * Verify Ed25519 signature
- * @param {string} message - The original message
- * @param {string} signature - Base64 encoded signature
- * @param {string} publicKey - Base64 encoded public key
- * @returns {boolean} - True if signature is valid
+ * @param message - The original message
+ * @param signature - Base64 encoded signature
+ * @param publicKey - Base64 encoded public key
+ * @returns True if signature is valid
  */
-function verifySignature(message, signature, publicKey) {
+export function verifySignature(message: string, signature: string, publicKey: string): boolean {
   try {
     const messageBytes = naclUtil.decodeUTF8(message);
     const signatureBytes = naclUtil.decodeBase64(signature);
@@ -23,9 +23,10 @@ function verifySignature(message, signature, publicKey) {
 
 /**
  * Generate a random invite code
- * @returns {string} - Formatted invite code (e.g., "FAMILY-A7K9-2024")
+ * @param networkName - Network name prefix for the code
+ * @returns Formatted invite code (e.g., "FAMILY-A7K9-2024")
  */
-function generateInviteCode(networkName = 'NET') {
+export function generateInviteCode(networkName: string = 'NET'): string {
   const prefix = networkName.toUpperCase().substring(0, 6);
   const random = Math.random().toString(36).substring(2, 6).toUpperCase();
   const year = new Date().getFullYear();
@@ -34,10 +35,10 @@ function generateInviteCode(networkName = 'NET') {
 
 /**
  * Generate a unique network ID
- * @param {string} networkName 
- * @returns {string}
+ * @param networkName - The network name to base the ID on
+ * @returns Unique network identifier
  */
-function generateNetworkId(networkName) {
+export function generateNetworkId(networkName: string): string {
   const sanitized = networkName.toLowerCase()
     .replace(/[^a-z0-9]/g, '-')
     .replace(/-+/g, '-')
@@ -49,15 +50,8 @@ function generateNetworkId(networkName) {
 
 /**
  * Generate a unique request ID
- * @returns {string}
+ * @returns Unique request identifier
  */
-function generateRequestId() {
+export function generateRequestId(): string {
   return 'req_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
 }
-
-module.exports = {
-  verifySignature,
-  generateInviteCode,
-  generateNetworkId,
-  generateRequestId
-};

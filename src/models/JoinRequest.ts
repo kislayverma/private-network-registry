@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema } from 'mongoose';
+import { IJoinRequest } from '../types/models';
 
-const joinRequestSchema = new mongoose.Schema({
+const joinRequestSchema = new Schema<IJoinRequest>({
   requestId: {
     type: String,
     required: true,
@@ -50,4 +51,4 @@ joinRequestSchema.index({ networkId: 1, status: 1 });
 joinRequestSchema.index({ username: 1 });
 joinRequestSchema.index({ networkId: 1, username: 1 });
 
-module.exports = mongoose.model('JoinRequest', joinRequestSchema);
+export default mongoose.model<IJoinRequest>('JoinRequest', joinRequestSchema);

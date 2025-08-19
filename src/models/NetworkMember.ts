@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema } from 'mongoose';
+import { INetworkMember } from '../types/models';
 
-const networkMemberSchema = new mongoose.Schema({
+const networkMemberSchema = new Schema<INetworkMember>({
   networkId: {
     type: String,
     required: true,
@@ -36,4 +37,4 @@ networkMemberSchema.index({ networkId: 1, username: 1 }, { unique: true });
 networkMemberSchema.index({ networkId: 1, isActive: 1 });
 networkMemberSchema.index({ username: 1, isActive: 1 });
 
-module.exports = mongoose.model('NetworkMember', networkMemberSchema);
+export default mongoose.model<INetworkMember>('NetworkMember', networkMemberSchema);

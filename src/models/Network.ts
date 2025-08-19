@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema } from 'mongoose';
+import { INetwork, INetworkSettings } from '../types/models';
 
-const networkSettingsSchema = new mongoose.Schema({
+const networkSettingsSchema = new Schema<INetworkSettings>({
   requireApproval: {
     type: Boolean,
     default: true
@@ -20,7 +21,7 @@ const networkSettingsSchema = new mongoose.Schema({
   }
 }, { _id: false });
 
-const networkSchema = new mongoose.Schema({
+const networkSchema = new Schema<INetwork>({
   networkId: {
     type: String,
     required: true,
@@ -76,4 +77,4 @@ networkSchema.index({ networkId: 1 });
 networkSchema.index({ creatorUsername: 1 });
 networkSchema.index({ isActive: 1 });
 
-module.exports = mongoose.model('Network', networkSchema);
+export default mongoose.model<INetwork>('Network', networkSchema);

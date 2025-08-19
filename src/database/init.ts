@@ -1,24 +1,24 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/private-networks';
 
-async function initDatabase() {
+export async function initDatabase(): Promise<void> {
   try {
     await mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
     });
     
     console.log('Connected to MongoDB');
     
     // Import models to ensure they're registered
-    require('../models/User');
-    require('../models/Network');
-    require('../models/NetworkMember');
-    require('../models/JoinRequest');
-    require('../models/NetworkCoordinator');
-    require('../models/InviteCode');
-    require('../models/Subscription');
+    await import('../models/User');
+    await import('../models/Network');
+    await import('../models/NetworkMember');
+    await import('../models/JoinRequest');
+    await import('../models/NetworkCoordinator');
+    await import('../models/InviteCode');
+    await import('../models/Subscription');
     
     console.log('MongoDB models initialized');
   } catch (error) {
@@ -47,7 +47,4 @@ process.on('SIGINT', async () => {
   }
 });
 
-module.exports = {
-  initDatabase,
-  mongoose
-};
+export { mongoose };

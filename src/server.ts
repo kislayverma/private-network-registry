@@ -1,17 +1,19 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
+import dotenv from 'dotenv';
+dotenv.config();
 
-const authRoutes = require('./routes/auth');
-const networkRoutes = require('./routes/network');
-const bootstrapRoutes = require('./routes/bootstrap');
-const userRoutes = require('./routes/user');
-const billingRoutes = require('./routes/billing');
+import express, { Request, Response } from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
-const { initDatabase } = require('./database/init');
-const { errorHandler } = require('./middleware/errorHandler');
+import authRoutes from './routes/auth';
+import networkRoutes from './routes/network';
+import bootstrapRoutes from './routes/bootstrap';
+import userRoutes from './routes/user';
+import billingRoutes from './routes/billing';
+
+import { initDatabase } from './database/init';
+import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -40,7 +42,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/health', (req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
@@ -55,7 +57,7 @@ app.use('/api/billing', billingRoutes);
 app.use(errorHandler);
 
 // 404 handler
-app.use('*', (req, res) => {
+app.use('*', (req: Request, res: Response) => {
   res.status(404).json({ error: 'Route not found' });
 });
 

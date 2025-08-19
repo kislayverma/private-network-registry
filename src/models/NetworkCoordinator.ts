@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema } from 'mongoose';
+import { INetworkCoordinator } from '../types/models';
 
-const networkCoordinatorSchema = new mongoose.Schema({
+const networkCoordinatorSchema = new Schema<INetworkCoordinator>({
   networkId: {
     type: String,
     required: true,
@@ -37,4 +38,4 @@ networkCoordinatorSchema.index({ networkId: 1, peerId: 1 }, { unique: true });
 networkCoordinatorSchema.index({ networkId: 1, isActive: 1, lastHeartbeat: 1 });
 networkCoordinatorSchema.index({ username: 1 });
 
-module.exports = mongoose.model('NetworkCoordinator', networkCoordinatorSchema);
+export default mongoose.model<INetworkCoordinator>('NetworkCoordinator', networkCoordinatorSchema);
