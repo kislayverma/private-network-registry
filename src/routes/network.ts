@@ -12,11 +12,12 @@ const router = express.Router();
 
 // Create new network
 router.post('/create', authenticateToken, [
-  body('name').isLength({ min: 1, max: 100 }),
+  body('networkName').isLength({ min: 1, max: 100 }),
   body('description').optional().isLength({ max: 500 }),
   body('settings').optional().isObject()
 ], async (req: Request, res: Response) => {
   const errors = validationResult(req);
+    console.log(JSON.stringify(errors));
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
@@ -24,16 +25,16 @@ router.post('/create', authenticateToken, [
   const session = await mongoose.startSession();
   
   try {
-    const { name, description, settings = {} } = req.body;
+    const { networkName, description, settings = {} } = req.body;
     const { username } = req.user;
-    const networkId = generateNetworkId(name);
-    const inviteCode = generateInviteCode(name);
+    const networkId = generateNetworkId(networkName);
+    const inviteCode = generateInviteCode(networkName);
 
     await session.withTransaction(async () => {
       // Create network
       const network = new Network({
         networkId,
-        name,
+        name: networkName,
         description,
         creatorUsername: username,
         settings
