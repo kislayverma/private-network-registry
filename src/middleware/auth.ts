@@ -92,7 +92,7 @@ export async function authenticateSignature(req: Request, res: Response, next: N
 export async function requireNetworkAdmin(req: Request, res: Response, next: NextFunction): Promise<void> {
   const { networkId } = req.params;
   const username = req.user.username;
-
+console.log(networkId + ' : ' + username);
   try {
     const member = await NetworkMember.findOne({
       networkId,
@@ -101,6 +101,7 @@ export async function requireNetworkAdmin(req: Request, res: Response, next: Nex
       isActive: true
     });
 
+console.log(JSON.stringify(member));
     if (!member) {
       res.status(403).json({ error: 'Admin access required' });
       return;
