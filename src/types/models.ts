@@ -86,3 +86,34 @@ export interface ISubscription extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface IDevice extends Document {
+  deviceId: string;
+  userId: string;
+  networkId: string;
+  signalAddress: string;
+  capabilities: ('relay' | 'store' | 'coordinator')[];
+  isCoordinator: boolean;
+  lastSeen: Date;
+  isOnline: boolean;
+  expiresAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ISignalingMessage {
+  type: 'offer' | 'answer' | 'ice-candidate' | 'relay-request';
+  from: string;
+  to: string;
+  data: any;
+  timestamp: Date;
+}
+
+export interface ISignalingChannel extends Document {
+  channelId: string;
+  participants: string[];
+  messages: ISignalingMessage[];
+  expiresAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}

@@ -19,6 +19,8 @@ export async function initDatabase(): Promise<void> {
     await import('../models/NetworkCoordinator');
     await import('../models/InviteCode');
     await import('../models/Subscription');
+    await import('../models/Device');
+    await import('../models/SignalingChannel');
     
     console.log('MongoDB models initialized');
   } catch (error) {
